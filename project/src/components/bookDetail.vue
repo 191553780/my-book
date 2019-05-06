@@ -1,39 +1,38 @@
 <template>
 	<div class="bookDetail">
 		<header>
-			<div class="goBack"><i></i></div>
+			<div class="goBack" @click="goBack"><i></i></div>
 			<div class="title">书籍详情</div>
 		</header>
 		<main>
-			
 			<div class="bookDetailWarp">
 				<!-- 遮罩层 -->
-				<img :src="require('@/assets/images/'+name.src)" alt="">
+				<img :src="require('@/assets/images/'+bookData.src)" alt="">
 				<!-- 书籍基本信息 -->
 				<div class="basic">
-					<div class="basic_img"><img :src="require('@/assets/images/'+name.src)" alt=""></div>
+					<div class="basic_img"><img :src="require('@/assets/images/'+bookData.src)" alt=""></div>
 					<div class="basic_datail">
-						<h3>{{name.name}}</h3>
-						<p>作者:<span>{{name.author}}</span></p>
-						<p>进度:<span>{{name.progress}}</span></p>
-						<p>分类:<span>{{name.type}}</span></p>
-						<p>更新: <span>{{name.newData}}</span></p>
+						<h3>{{bookData.name}}</h3>
+						<p>作者:<span>{{bookData.author}}</span></p>
+						<p>进度:<span>{{bookData.progress}}</span></p>
+						<p>分类:<span>{{bookData.type}}</span></p>
+						<p>更新: <span>{{bookData.newData}}</span></p>
 					</div>
 				</div>
 				<!-- 加入书架 开始锐度  -->
 				<div class="read">
 					<div class="jion"><router-link to="/">加入书架</router-link></div>
-					<div class="start"><router-link :to="{name:'bookRead',params:{data:name.chapter}}">开始阅读</router-link></div>
+					<div class="start"><router-link :to="{name:'bookRead',params:{data:bookData}}">开始阅读</router-link></div>
 				</div>
 			</div>
 			
 			<!-- 书籍剧情介绍 -->
-			<div class="plot"><p>{{name.describe}}</p></div>
+			<div class="plot"><p>{{bookData.describe}}</p></div>
 			<!-- 书籍目录 -->
 			<div class="catalog">
 				<h3>最新章节</h3>
 				<div class="cataList">
-					<span>连载至 <span>{{name.chapter[name.chapter.length - 1].number}} | {{name.chapter[name.chapter.length - 1].name}}</span></span>
+					<span>连载至 <span>{{bookData.chapter[bookData.chapter.length - 1].number}} | {{bookData.chapter[bookData.chapter.length - 1].name}}</span></span>
 					<i></i>
 				</div>
 			</div>
@@ -48,7 +47,6 @@
 								<p>name <span>1楼</span></p>
 								<p>say</p>
 							</div>
-							
 						</li>
 					</ul>
 				</div>
@@ -62,7 +60,12 @@ export default {
 	name:'bookDetail',
 	data(){
 		return{
-			name:this.$route.params.data
+			bookData:this.$route.params.data
+		}
+	},
+	methods:{
+		goBack(){
+			this.$router.push('/bookCity')
 		}
 	},
 	mounted(){

@@ -6,6 +6,9 @@ const app = express();
 
 const getHot = require('./api/hotbook');
 const getNew = require('./api/newbook');
+const getRank = require('./api/rank');
+const getRankFree = require('./api/rankFree');
+const getRankEnd = require('./api/rankEnd');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,6 +16,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 // 后端api路由
 app.use('/getHot', getHot);
 app.use('/getNew', getNew);
+app.use('/getRank', getRank);
+app.use('/getRankFree', getRankFree);
+app.use('/getRankEnd', getRankEnd);
 
 // 监听端口
 app.listen(3000);

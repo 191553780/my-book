@@ -10,7 +10,7 @@
 		</header>
 		
 		<!-- 侧拉功能 -->
-		<aside :class="{aside_info:true,aside_info_enter:isShow}" :style="{height:screenHeight+'px'}">
+		<aside :class="{aside_info:true,aside_info_enter:isShow}" :style="{height:this.$store.state.screenHeight+'px'}">
 			<div class="info">
 				<div>这里是账号名称</div>
 				<div>这是里我的首页</div>
@@ -46,7 +46,6 @@ export default {
 			cartoon: 'cartoon',
 			selected: 'bookCity',
 			isShow:false,
-			screenHeight:document.documentElement.clientHeight,
 			navs: [
 				{
 					name: '书架',
@@ -93,7 +92,6 @@ export default {
 		// 侧拉功能
 		showInfo(){
 			this.isShow = !this.isShow
-			// console.log(this.isShow,this.screenHeight)
 			
 			// 遮罩层出现，禁止body滑动	
 			if(this.isShow){
@@ -122,13 +120,13 @@ export default {
 		window.onresize = () => {
 			return (() => {
 				window.screenHeight = document.documentElement.clientHeight
-				this.screenHeight = window.screenHeight
+				
+				this.$store.commit('doScreen', window.screenHeight);
 			})()
 		}
 	},
 	watch: {
 		$route(to, from) {
-			// console.log(to.meta.index,from.meta.index)
 			if (to.meta.index < from.meta.index) {
 				this.cartoon = 'cartoon_back';
 			} else {

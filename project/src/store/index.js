@@ -4,12 +4,24 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state:{
-		title:''
+		title:'',
+		screenHeight:document.documentElement.clientHeight,
+		hotBook:[],
+		newBook:[]
 	},
 	getters:{},
 	mutations:{
 		doTitle: (state,val) => {
 			return state.title = val
+		},
+		doScreen: (state,val) => {
+			state.screenHeight = val
+		},
+		doHot: (state,val) => {
+			state.hotBook = val
+		},
+		doNew: (state,val) => {
+			state.newBook = val
 		}
 	},
 	actions:{},

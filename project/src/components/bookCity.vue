@@ -17,7 +17,7 @@
 			<section class="classify">
 				<div class="rank">
 					<p>
-						<router-link to="/">
+						<router-link :to="{name:'rank',params:{title:'排行榜',data:this.rank}}">
 							<i></i>
 							<span>排行榜</span>
 						</router-link>
@@ -25,7 +25,7 @@
 				</div>
 				<div class="freeBook">
 					<p>
-						<router-link to="/">
+						<router-link :to="{name:'rank',params:{title:'免费',data:this.rankFree}}">
 							<i></i>
 							<span>免费</span>
 						</router-link>
@@ -33,7 +33,7 @@
 				</div>
 				<div class="endBook">
 					<p>
-						<router-link to="/">
+						<router-link :to="{name:'rank',params:{title:'完本',data:this.rankEnd}}">
 							<i></i>
 							<span>完本</span>
 						</router-link>
@@ -45,11 +45,12 @@
 				<div class="title">
 					<h3>热门小说</h3>
 					<span>一周热销小说</span>
-					<p><router-link to="/">更多>></router-link></p>
+					<!-- <p><router-link :to="{name:'rank',params:{title:'热门',data:this.rank}}">更多>></router-link></p> -->
 				</div>
 				<div class="bookContent">
+				
 					<ul>
-						<li v-for="item in hotBook">
+						<li v-for="(item,key) in hotBook">
 							<div class="bookItem">
 								<router-link :to="{name:'bookDetail',params:{data:item}}">
 									<div class="bookImg">
@@ -71,7 +72,7 @@
 				<div class="title">
 					<h3>新书抢鲜</h3>
 					<span>24小时热销新书</span>
-					<p><router-link to="/">更多>></router-link></p>
+					<!-- <p><router-link :to="{name:'rank',params:{title:'热门',data:this.rank}}">更多>></router-link></p> -->
 				</div>
 				<div class="bookContent">
 					<ul>
@@ -97,12 +98,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'bookCity',
   data () {
     return {
-		hotBook:[],
-		newBook:[],
+		rank:'',
+		rankFree:'',
+		rankEnd:'',
 		swiperOption: {//swiper3
 			loop:true,
 			autoplay:true,
@@ -111,6 +114,12 @@ export default {
 			}
 		}
     }
+  },
+  computed:{
+	  ...mapState({
+		  newBook:'newBook',
+		  hotBook:'hotBook'
+	  })
   },
   methods:{
 	// 请求数据，并赋值为全局变量
@@ -125,8 +134,14 @@ export default {
 	}
   },
   mounted(){
-	this.getBook('/api/getHot',res => this.hotBook = res.data)
-	this.getBook('/api/getNew',res => this.newBook = res.data)
+	this.getBook('/api/getRank',res => this.rank = res.data)
+	this.getBook('/api/getRankFree',res => this.rankFree = res.data)
+	this.getBook('/api/getRankEnd',res => this.rankEnd = res.data)
+	
+	this.getBook('/api/getHot',res => this.$store.commit('doHot',res.data))
+	this.getBook('/api/getNew',res => this.$store.commit('doNew',res.data))
+	
+	
   }
 }
 </script>

@@ -20,7 +20,7 @@ Vue.use(VueAwesomeSwiper)
 new Vue({
   el: '#app',
   router,
-	store,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -8,10 +8,12 @@ import community from '@/components/community'
 import bookCity from '@/components/bookCity'
 import bookDetail from '@/components/bookDetail'
 import bookRead from '@/components/bookRead'
+import rank from '@/components/rank'
 
 Vue.use(Router)
 
 export default new Router({
+	mode:'history',
   routes: [
     {
       path: '/',
@@ -53,6 +55,11 @@ export default new Router({
 			path:'/bookRead',
 			name:'bookRead',
 			component:bookRead
+		},
+		{
+			path:'/rank',
+			name:'rank',
+			component:rank
 		}
   ]
 })
