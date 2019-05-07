@@ -1,57 +1,61 @@
 <template>
 	<div class="bookDetail">
-		<header>
-			<div class="goBack" @click="goBack"><i></i></div>
-			<div class="title">书籍详情</div>
-		</header>
-		<main>
-			<div class="bookDetailWarp">
-				<!-- 遮罩层 -->
-				<img :src="require('@/assets/images/'+bookData.src)" alt="">
-				<!-- 书籍基本信息 -->
-				<div class="basic">
-					<div class="basic_img"><img :src="require('@/assets/images/'+bookData.src)" alt=""></div>
-					<div class="basic_datail">
-						<h3>{{bookData.name}}</h3>
-						<p>作者:<span>{{bookData.author}}</span></p>
-						<p>进度:<span>{{bookData.progress}}</span></p>
-						<p>分类:<span>{{bookData.type}}</span></p>
-						<p>更新: <span>{{bookData.newData}}</span></p>
+		<!-- 加载前额遮罩 -->
+		<div :class="{loadMask:!isShow}" v-show="!isShow" :style="{height:this.$store.state.screenHeight+'px'}">努力加载中......</div>
+		<div class="detailContent" v-if="isShow">
+			<header>
+				<div class="goBack" @click="goBack"><i></i></div>
+				<div class="title">书籍详情</div>
+			</header>
+			<main>
+				<div class="bookDetailWarp">
+					<!-- 遮罩层 -->
+					<img :src="require('@/assets/images/'+bookData[0].src)" alt="">
+					<!-- 书籍基本信息 -->
+					<div class="basic">
+						<div class="basic_img"><img :src="require('@/assets/images/'+bookData[0].src)" alt=""></div>
+						<div class="basic_datail">
+							<h3>{{bookData[0].name}}</h3>
+							<p>作者:<span>{{bookData[0].author}}</span></p>
+							<p>进度:<span>{{bookData[0].progress}}</span></p>
+							<p>分类:<span>{{bookData[0].type}}</span></p>
+							<p>更新: <span>{{bookData[0].newData}}</span></p>
+						</div>
+					</div>
+					<!-- 加入书架 开始锐度  -->
+					<div class="read">
+						<div class="jion"><router-link to="/">加入书架</router-link></div>
+						<div class="start"><router-link :to="{name:'bookRead',params:{data:bookData}}">开始阅读</router-link></div>
 					</div>
 				</div>
-				<!-- 加入书架 开始锐度  -->
-				<div class="read">
-					<div class="jion"><router-link to="/">加入书架</router-link></div>
-					<div class="start"><router-link :to="{name:'bookRead',params:{data:bookData}}">开始阅读</router-link></div>
+				
+				<!-- 书籍剧情介绍 -->
+				<div class="plot"><p>{{bookData[0].describe}}</p></div>
+				<!-- 书籍目录 -->
+				<div class="catalog">
+					<h3>最新章节</h3>
+					<div class="cataList">
+						<span>连载至 <span>{{bookData[0].chapter[bookData[0].chapter.length - 1].number}} | {{bookData[0].chapter[bookData[0].chapter.length - 1].name}}</span></span>
+						<i></i>
+					</div>
 				</div>
-			</div>
-			
-			<!-- 书籍剧情介绍 -->
-			<div class="plot"><p>{{bookData.describe}}</p></div>
-			<!-- 书籍目录 -->
-			<div class="catalog">
-				<h3>最新章节</h3>
-				<div class="cataList">
-					<span>连载至 <span>{{bookData.chapter[bookData.chapter.length - 1].number}} | {{bookData.chapter[bookData.chapter.length - 1].name}}</span></span>
-					<i></i>
+				<!-- 书籍的评价 -->
+				<div class="evaluate">
+					<h3>最新评论</h3>
+					<div class="evaluateList">
+						<ul>
+							<li>
+								<div class="evalAuthor"><img src="" alt=""></div>
+								<div class="evalCell">
+									<p>name <span>1楼</span></p>
+									<p>say</p>
+								</div>
+							</li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<!-- 书籍的评价 -->
-			<div class="evaluate">
-				<h3>最新评论</h3>
-				<div class="evaluateList">
-					<ul>
-						<li>
-							<div class="evalAuthor"><img src="" alt=""></div>
-							<div class="evalCell">
-								<p>name <span>1楼</span></p>
-								<p>say</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</main>
+			</main>
+		</div>
 	</div>
 </template>
 
@@ -60,21 +64,40 @@ export default {
 	name:'bookDetail',
 	data(){
 		return{
-			bookData:this.$route.params.data
+			bookID:this.$route.params.data,
+			bookData:[],
+			isShow:false
 		}
 	},
 	methods:{
 		goBack(){
 			this.$router.push('/bookCity')
+		},
+		getItemData(url,callback){
+			this.axios({
+				url:url,
+				method:'post',
+				data:{
+					bookID:this.bookID
+				}
+			}).then(callback).catch((res) => {
+				console.log(res)
+			})
 		}
 	},
 	mounted(){
-		
+		this.getItemData('/api/getItemBook',res => {
+			this.bookData = res.data
+			// 加载完毕显示页面
+			this.isShow = true
+		})	
 	}
 }
 </script>
 
 <style scoped>
+/* 加载前的遮罩 */
+.loadMask{background: rgba(0,0,0,.2);text-align: center;}
 /* 书籍详情 头部 */
 header{height: 2.75rem;width: 100%;background: #cee;position: relative;display: flex;justify-content: center;align-items: center;}
 header>.goBack{position: absolute;left: 0;top: 0;height: 100%;width: 2.5rem;padding: 0.625rem;}

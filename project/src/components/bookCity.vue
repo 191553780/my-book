@@ -52,7 +52,7 @@
 					<ul>
 						<li v-for="(item,key) in hotBook">
 							<div class="bookItem">
-								<router-link :to="{name:'bookDetail',params:{data:item}}">
+								<router-link :to="{name:'bookDetail',params:{data:item._id}}">
 									<div class="bookImg">
 										<img :src="require('@/assets/images/'+item.src)" alt="">
 									</div>
@@ -78,7 +78,7 @@
 					<ul>
 						<li v-for="item in newBook">
 							<div class="bookItem">
-								<router-link :to="{name:'bookDetail',params:{data:item}}">
+								<router-link :to="{name:'bookDetail',params:{data:item._id}}">
 									<div class="bookImg">
 										<img :src="require('@/assets/images/'+item.src)" alt="">
 									</div>
@@ -134,14 +134,13 @@ export default {
 	}
   },
   mounted(){
+
 	this.getBook('/api/getRank',res => this.rank = res.data)
 	this.getBook('/api/getRankFree',res => this.rankFree = res.data)
 	this.getBook('/api/getRankEnd',res => this.rankEnd = res.data)
 	
 	this.getBook('/api/getHot',res => this.$store.commit('doHot',res.data))
 	this.getBook('/api/getNew',res => this.$store.commit('doNew',res.data))
-	
-	
   }
 }
 </script>

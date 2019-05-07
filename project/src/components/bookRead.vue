@@ -2,13 +2,13 @@
 	<div class="bookRead">
 		<!-- 阅读显示内容 -->
 		<div class="readContent">
-			{{this.$route.params.data.chapter[index].content}}
+			{{this.$route.params.data[0].chapter[index].content}}
 		</div>
 		<!-- 自定义控件 -->
 		<div class="readControl" :style="{height:this.$store.state.screenHeight+'px'}">
 			<!-- 退出阅读 -->
 			<div class="outRead">
-				<p>{{this.$route.params.data.name}}</p>
+				<p>{{this.$route.params.data[0].name}}</p>
 				<p><router-link :to="{name:'/',params:{}}">退出阅读</router-link></p>
 			</div>
 			<!-- 下一章 | 下一章 -->
@@ -31,7 +31,7 @@ export default {
 	},
 	methods:{
 		nextBook(){
-			this.index = Math.min(++this.index,this.$route.params.data.chapter.length-1)
+			this.index = Math.min(++this.index,this.$route.params.data[0].chapter.length-1)
 		},
 		prevBook(){
 			this.index = Math.max(--this.index,0)
