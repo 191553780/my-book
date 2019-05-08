@@ -17,12 +17,25 @@ Vue.use(VueAwesomeSwiper)
 Vue.use(qs)
 Vue.use(VueAxios, axios);
 
+// 设置全局请求函数
+Vue.prototype.getData = function(url, data, callback) { //changeData是函数名
+	this.axios({
+		url: url,
+		method: 'post',
+		data: data
+	}).then(callback).catch((res) => {
+		console.log(res)
+	})
+}
+
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  axios,
-  components: { App },
-  template: '<App/>'
+	el: '#app',
+	router,
+	store,
+	axios,
+	components: {
+		App
+	},
+	template: '<App/>'
 })

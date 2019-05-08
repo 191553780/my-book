@@ -115,15 +115,6 @@ export default {
 				this.$store.commit('doTitle', val.name);
 			}
 		});
-		
-		// 监听屏幕大小，改变遮罩层高度
-		window.onresize = () => {
-			return (() => {
-				window.screenHeight = document.documentElement.clientHeight
-				
-				this.$store.commit('doScreen', window.screenHeight);
-			})()
-		}
 	},
 	watch: {
 		$route(to, from) {

@@ -8,7 +8,7 @@
 			<ul>
 				<li v-for="(item,key) in bookData">
 					<div class="bookItem">
-						<router-link :to="{name:'bookDetail',params:{data:item}}">
+						<router-link :to="{name:'bookDetail',params:{data:item._id}}">
 							<p>{{key+1}}</p>
 							<div class="bookImg">
 								<img :src="require('@/assets/images/'+item.src)" alt="">

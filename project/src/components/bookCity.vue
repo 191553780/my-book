@@ -122,25 +122,15 @@ export default {
 	  })
   },
   methods:{
-	// 请求数据，并赋值为全局变量
-	getBook(url,callback){
-		this.axios({
-			url:url,
-			method:'post',
-			data:{}
-		}).then(callback).catch((res) => {
-			console.log(res)
-		})
-	}
+	  
   },
   mounted(){
-
-	this.getBook('/api/getRank',res => this.rank = res.data)
-	this.getBook('/api/getRankFree',res => this.rankFree = res.data)
-	this.getBook('/api/getRankEnd',res => this.rankEnd = res.data)
+	this.getData('/api/getRank',{},res => this.rank = res.data)
+	this.getData('/api/getRankFree',{},res => this.rankFree = res.data)
+	this.getData('/api/getRankEnd',{},res => this.rankEnd = res.data)
 	
-	this.getBook('/api/getHot',res => this.$store.commit('doHot',res.data))
-	this.getBook('/api/getNew',res => this.$store.commit('doNew',res.data))
+	this.getData('/api/getHot',{},res => this.$store.commit('doHot',res.data))
+	this.getData('/api/getNew',{},res => this.$store.commit('doNew',res.data))
   }
 }
 </script>

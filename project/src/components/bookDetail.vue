@@ -72,21 +72,10 @@ export default {
 	methods:{
 		goBack(){
 			this.$router.push('/bookCity')
-		},
-		getItemData(url,callback){
-			this.axios({
-				url:url,
-				method:'post',
-				data:{
-					bookID:this.bookID
-				}
-			}).then(callback).catch((res) => {
-				console.log(res)
-			})
 		}
 	},
 	mounted(){
-		this.getItemData('/api/getItemBook',res => {
+		this.getData('/api/getItemBook',{bookID:this.bookID},res => {
 			this.bookData = res.data
 			// 加载完毕显示页面
 			this.isShow = true
@@ -97,7 +86,7 @@ export default {
 
 <style scoped>
 /* 加载前的遮罩 */
-.loadMask{background: rgba(0,0,0,.2);text-align: center;}
+.loadMask{background: rgba(0,0,0,.1);text-align: center;}
 /* 书籍详情 头部 */
 header{height: 2.75rem;width: 100%;background: #cee;position: relative;display: flex;justify-content: center;align-items: center;}
 header>.goBack{position: absolute;left: 0;top: 0;height: 100%;width: 2.5rem;padding: 0.625rem;}

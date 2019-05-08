@@ -1,7 +1,12 @@
 <template>
 	<div class="myCenter">
 		<main>
-			div.
+			<!-- 未登录 -->
+			<div class="unLogin">
+				
+			</div>
+			<!-- 已登录 -->
+			<div class="login"></div>
 		</main>
 	</div>
 </template>

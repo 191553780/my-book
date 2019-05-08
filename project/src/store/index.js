@@ -9,13 +9,20 @@ const store = new Vuex.Store({
 		hotBook:[],
 		newBook:[]
 	},
-	getters:{},
+	getters:{
+		doScreen: state => {
+			// 监听屏幕大小，改变侧拉遮罩层高度
+			window.onresize = () => {
+				return (() => {
+					window.screenHeight = document.documentElement.clientHeight
+					state.screenHeight = window.screenHeight;
+				})()
+			}
+		},
+	},
 	mutations:{
 		doTitle: (state,val) => {
-			return state.title = val
-		},
-		doScreen: (state,val) => {
-			state.screenHeight = val
+			state.title = val
 		},
 		doHot: (state,val) => {
 			state.hotBook = val

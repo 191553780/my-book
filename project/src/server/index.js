@@ -10,6 +10,7 @@ const getRank = require('./api/rank');
 const getRankFree = require('./api/rankFree');
 const getRankEnd = require('./api/rankEnd');
 const getItemBook = require('./api/itemBook');
+const getUser = require('./api/user');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,6 +22,7 @@ app.use('/getRank', getRank);
 app.use('/getRankFree', getRankFree);
 app.use('/getRankEnd', getRankEnd);
 app.use('/getItemBook', getItemBook);
+app.use('/getUser', getUser);
 
 // 监听端口
 app.listen(3000);

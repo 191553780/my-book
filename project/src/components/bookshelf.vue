@@ -11,7 +11,10 @@ export default {
     return {
       
     }
-  }
+  },
+	created(){
+		this.getData('/api/getUser',{},res => console.log(res.data))
+	}
 }
 </script>
 
